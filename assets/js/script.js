@@ -1,10 +1,13 @@
-const API_KEY = "04xkUteXqtvmUPW0tnKAX41mMMQ";
-const API_URL = "https://ci-jshint.herokuapp.com/api";
+const API_KEY = "04xkUteXqtvmUPW0tnKAX41mMMQ"; // Turn API key into variable to avoid pasting it in constantly
+const API_URL = "https://ci-jshint.herokuapp.com/api"; // Turn API url into variable to avoid pasting it in constantly
 const resultsModal = new bootstrap.Modal(document.getElementById("resultsModal"));
 
-document.getElementById("status").addEventListener("click", e => getStatus(e));
-document.getElementById("submit").addEventListener("click", e => postForm(e));
+document.getElementById("status").addEventListener("click", e => getStatus(e)); // Check status of API (end date) when button is clicked
+document.getElementById("submit").addEventListener("click", e => postForm(e)); // Send data from form when submit button is clicked
 
+/** 
+ * Deal with options by pushing selected options into one comma separated list
+*/
 function processOptions(form) {
 
     let optArray = [];
@@ -21,6 +24,9 @@ function processOptions(form) {
     return form;
 }
 
+/**
+ * Send form data to be checked
+*/
 async function postForm(e) {
     const form = processOptions(new FormData(document.getElementById("checksform")));
 
@@ -41,6 +47,9 @@ async function postForm(e) {
     }
 }
 
+/**
+ * Return any errors in code sent through the form
+*/
 function displayErrors(data) {
 
     let heading = `JSHint Results for ${data.file}`;
@@ -62,6 +71,9 @@ function displayErrors(data) {
     resultsModal.show();
 }
 
+/**
+ * Get status of API key to see if it's still in date
+ */
 async function getStatus(e) {
     const queryString = `${API_URL}?api_key=${API_KEY}`;
 
@@ -76,6 +88,9 @@ async function getStatus(e) {
     }
 }
 
+/**
+ * Display status of API in modal box after button is clicked 
+ */
 function displayStatus(data) {
 
     let heading = "API Key Status";
